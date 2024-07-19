@@ -7,6 +7,7 @@ CDK で ECS on Fargate 環境を構築する際のサンプルテンプレート
 - CI/CD
 - セキュリティ
 
+
 ## インフラ構成概要図
 
 ![Architecture Image](packages/docs/images/architecture.jpg)
@@ -274,3 +275,9 @@ aws ssm start-session \
 ```bash
 mysql -u icasu -p -h 127.0.0.1 -P 3307 --local_infile=1 -D icasudb
 ```
+
+## 貢献について
+
+現在本リポジトリは、クラスメソッド内部のミラーとして機能しています。
+
+今後PRやISSUE受け入れを検討しており準備している段階です。フィードバックがありましたら、[tmk2154](https://x.com/tmk2154), [shuntaka_jp](https://x.com/shuntaka_jp)までお願いします。
