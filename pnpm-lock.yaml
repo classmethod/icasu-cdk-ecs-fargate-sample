@@ -103,8 +103,8 @@ importers:
         specifier: 16.9.0
         version: 16.9.0
       graphql-query-complexity:
-        specifier: 0.12.0
-        version: 0.12.0(graphql@16.9.0)
+        specifier: 1.0.0
+        version: 1.0.0(graphql@16.9.0)
       jwks-rsa:
         specifier: 3.1.0
         version: 3.1.0
@@ -2309,8 +2309,8 @@ packages:
   graceful-fs@4.2.11:
     resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
 
-  graphql-query-complexity@0.12.0:
-    resolution: {integrity: sha512-fWEyuSL6g/+nSiIRgIipfI6UXTI7bAxrpPlCY1c0+V3pAEUo1ybaKmSBgNr1ed2r+agm1plJww8Loig9y6s2dw==}
+  graphql-query-complexity@1.0.0:
+    resolution: {integrity: sha512-Tj7mRIuKWjGomPaRW5E+ztY8bhYPf1v/7bkDPuzksrR3GqHeIS5jxzX8CfimlV3g9z0lT20RG9JgaUUjhRjtOA==}
     peerDependencies:
       graphql: ^14.6.0 || ^15.0.0 || ^16.0.0
 
@@ -6259,7 +6259,7 @@ snapshots:
 
   graceful-fs@4.2.11: {}
 
-  graphql-query-complexity@0.12.0(graphql@16.9.0):
+  graphql-query-complexity@1.0.0(graphql@16.9.0):
     dependencies:
       graphql: 16.9.0
       lodash.get: 4.4.2
