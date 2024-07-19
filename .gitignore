@@ -1,0 +1,15 @@
+*.js
+!jest.config.js
+!.eslintrc.js
+*.d.ts
+node_modules
+
+# CDK asset staging directory
+.cdk.staging
+cdk.out
+
+# サンプルコード開発用の環境設定をコミットしないためcdk.context.jsonはコミット対象外としている
+# 開発で利用する場合は削除すること
+cdk.context.json
+
+.cspellcache

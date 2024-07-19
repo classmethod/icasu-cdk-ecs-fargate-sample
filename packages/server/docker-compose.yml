@@ -1,0 +1,15 @@
+version: '3.9'
+services:
+  icasu-db:
+    image: mysql:8.0.29
+    platform: linux/arm64/v8
+    container_name: icasu-db
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    volumes:
+      - icasu-db-data:/var/lib/mysql
+      - $PWD/container/mysql/conf.d:/etc/mysql/conf.d:cached
+    ports:
+      - '3306:3306'
+volumes:
+  icasu-db-data:

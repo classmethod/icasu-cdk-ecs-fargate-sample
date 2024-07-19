@@ -1,0 +1,51 @@
+{
+  "ignorePaths": [
+    "./packages/docs/architecture.drawio",
+    "./packages/iac/test/__snapshots__",
+    "pnpm-lock.yaml"
+  ],
+  "ignoreWords": [
+    "codestarnotifications",
+    "cicd",
+    "vals",
+    "dbname",
+    "userpool"
+  ],
+  "words": [
+    "classmethod",
+    "cxlabs",
+    "bation",
+    "icasu",
+    "jwks",
+    "icasudb",
+    "oidc"
+  ],
+  "languageSettings": [
+    {
+      "languageId": "*",
+      "dictionaries": ["aws", "middleware", "mysql", "node"],
+      "dictionaryDefinitions": [
+        {
+          "name": "aws",
+          "path": "./.cspell/aws.txt",
+          "addWords": false
+        },
+        {
+          "name": "middleware",
+          "path": "./.cspell/middleware.txt",
+          "addWords": false
+        },
+        {
+          "name": "node",
+          "path": "./.cspell/node.txt",
+          "addWords": false
+        },
+        {
+          "name": "mysql",
+          "path": "./.cspell/mysql.txt",
+          "addWords": false
+        }
+      ]
+    }
+  ]
+}

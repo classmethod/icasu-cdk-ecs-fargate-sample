@@ -1,0 +1,25 @@
+name: Setup node
+description: Setup Node and restore cache
+
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/setup-node@v4
+      with:
+        node-version-file: './.node-version'
+
+    - uses: pnpm/action-setup@v4
+
+    - name: Restore node modules
+      uses: actions/cache@v4
+      id: cache_dependency
+      env:
+        cache-name: cache-dependency
+      with:
+        path: '**/node_modules'
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('pnpm-lock.yaml') }}
+
+    - name: Install node modules
+      if: ${{ steps.cache_dependency.outputs.cache-hit != 'true' }}
+      shell: bash
+      run: pnpm install --frozen-lockfile

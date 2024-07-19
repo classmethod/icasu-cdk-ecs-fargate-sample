@@ -1,0 +1,66 @@
+name: WORK_FLOW_CREATE_CONTAINER
+
+on:
+  workflow_call:
+    inputs:
+      stageName:
+        required: true
+        type: string
+      imageName:
+        required: true
+        type: string
+
+env:
+  PROJECT_NAME: icasu-ecs-fargate
+  CACHE_PATH: /tmp/.buildx-cache-icasu-ecs-fargate-sample-app
+
+permissions:
+  id-token: write
+  contents: read
+  actions: read
+
+jobs:
+  create-container:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: ${{ inputs.stageName }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Cache Docker layers
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.CACHE_PATH }}
+          key: ${{ runner.os }}-${{ env.CACHE_PATH }}-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-${{ env.CACHE_PATH }}
+      - name: Create tag
+        run: |
+          COMMIT_HASH=$(git rev-parse --short "$GITHUB_SHA")
+          TAG=${{ vars.AWS_ACCOUNT_ID }}.dkr.ecr.ap-northeast-1.amazonaws.com/${{ inputs.imageName }}:$COMMIT_HASH
+          echo "TAGS=$TAG" >> $GITHUB_ENV
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::${{ vars.AWS_ACCOUNT_ID }}:role/${{ env.PROJECT_NAME }}-assume-role
+          aws-region: ap-northeast-1
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v2
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          tags: ${{ env.TAGS }}
+          push: true
+          platforms: linux/amd64
+          file: Dockerfile.server
+          provenance: false
+          cache-from: type=local,src=${{ env.CACHE_PATH }}
+          cache-to: type=local,dest=${{ env.CACHE_PATH }}-new,mode=max
+      - name: Move cache
+        run: |
+          rm -rf ${{ env.CACHE_PATH }}
+          mv ${{ env.CACHE_PATH }}-new ${{ env.CACHE_PATH }}

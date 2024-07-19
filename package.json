@@ -1,0 +1,25 @@
+{
+  "name": "cdk-ecs-on-fargate-sample",
+  "version": "0.1.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "pnpm --recursive --if-present test",
+    "lint": "pnpm run /lint:.*/",
+    "lint:ws": "pnpm --recursive --if-present lint",
+    "lint:check": "biome check .",
+    "lint:spell": "cspell lint . --cache --gitignore",
+    "fix": "pnpm run /fix:.*/",
+    "fix:ws": "pnpm --recursive --if-present fix",
+    "fix:root": "biome check . --write"
+  },
+  "packageManager": "pnpm@9.4.0",
+  "engines": {
+    "npm": "use pnpm please❤️ ",
+    "yarn": "use pnpm please❤️ ",
+    "pnpm": ">=9.4.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.8.3",
+    "cspell": "8.10.4"
+  }
+}

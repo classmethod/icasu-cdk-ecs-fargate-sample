@@ -1,0 +1,21 @@
+name: CI
+
+on: [push]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: ${{ inputs.stageName }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup node
+        uses: ./.github/actions/setup-node
+
+      - name: CI
+        shell: bash
+        run: |
+          pnpm run lint
+          pnpm run test

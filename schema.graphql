@@ -1,0 +1,7 @@
+type Task {
+  taskId: ID!
+}
+
+type Query {
+  task(id: ID!): Task!
+}

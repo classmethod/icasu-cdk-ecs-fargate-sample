@@ -1,0 +1,4 @@
+autocommit
+slowquery
+mysqld
+infile

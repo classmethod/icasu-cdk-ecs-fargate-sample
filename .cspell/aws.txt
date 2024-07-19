@@ -1,0 +1,14 @@
+firelens
+fargate
+nacl
+cloudfront
+cloudwatch
+codebuild
+codepipeline
+cognito
+cidr
+secretsmanager
+customresources
+amazonaws
+apigateway
+buildspec

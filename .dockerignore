@@ -1,0 +1,12 @@
+*
+!packages/server/package.json
+!packages/server/tsconfig.build.json
+!packages/server/tsconfig.json
+!packages/server/schema.prisma
+!packages/server/.env
+!packages/server/src
+!pnpm-lock.yaml
+!pnpm-workspace.yaml
+!package.json
+!.eslintrc.json
+!schema.graphql

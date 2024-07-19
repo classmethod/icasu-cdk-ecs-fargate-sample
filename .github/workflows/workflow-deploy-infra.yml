@@ -1,0 +1,62 @@
+name: WORK_FLOW_DEPLOY_INFRA
+
+on:
+  workflow_call:
+    inputs:
+      stageName:
+        required: true
+        type: string
+env:
+  PROJECT_NAME: icasu-ecs-fargate
+
+permissions:
+  id-token: write
+  contents: read
+  actions: read
+
+jobs:
+  deploy-infra:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: ${{ inputs.stageName }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup node
+        uses: ./.github/actions/setup-node
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::${{ vars.AWS_ACCOUNT_ID }}:role/${{ env.PROJECT_NAME }}-assume-role
+          aws-region: ap-northeast-1
+
+      - name: Create deploy container hash
+        shell: bash
+        run: |
+          COMMIT_HASH=$(git rev-parse --short "$GITHUB_SHA")
+          echo "imageTag=$COMMIT_HASH" >> $GITHUB_ENV
+
+      - name: Deploy infra
+        shell: bash
+        run: |
+          export CDK_DEFAULT_ACCOUNT=${{ vars.AWS_ACCOUNT_ID }}
+          export CDK_DEFAULT_REGION="ap-northeast-1"
+
+          cd ./packages/iac
+
+          pnpm cdk deploy \
+            -c environment=${{ inputs.stageName }} \
+            ${{ inputs.stageName }}-${{ env.PROJECT_NAME }}-deploy-role-stack \
+            --require-approval never
+          pnpm cdk deploy \
+            -c environment=${{ inputs.stageName }} \
+            ${{ inputs.stageName }}-${{ env.PROJECT_NAME }}-ecr-stack \
+            --require-approval never
+          pnpm cdk deploy \
+            -c environment=${{ inputs.stageName }} \
+            -c imageTag=${{ env.imageTag }} \
+            ${{ inputs.stageName }}-${{ env.PROJECT_NAME }}-infra-stack \
+            --require-approval never

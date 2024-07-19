@@ -1,0 +1,34 @@
+name: DEPLOY_INFRA
+
+env:
+  TZ: 'Asia/Tokyo'
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - packages/server/**
+      - packages/iac/**
+      - .github/workflows/workflow-create-container.yml
+      - .github/workflows/workflow-deploy-infra.yml
+      - .github/workflows/deploy.yml
+      - pnpm-lock.yaml
+
+jobs:
+  build-container:
+    name: build container dev
+    uses: ./.github/workflows/workflow-create-container.yml
+    with:
+      stageName: dev
+      imageName: icasu-ecs-fargate-sample-app
+    secrets: inherit
+
+  deploy-infra:
+    name: deploy infra dev
+    uses: ./.github/workflows/workflow-deploy-infra.yml
+    needs:
+      - build-container
+    with:
+      stageName: dev
+    secrets: inherit

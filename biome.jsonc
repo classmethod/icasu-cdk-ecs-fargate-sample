@@ -1,0 +1,54 @@
+/**
+ * ICASU_NOTE: Biomeのvscodeプラグインはワークスペース対応していない。開発生産性のため、formatOnSaveやLSPのサポートを重要視する場合、継承を使ったワークススペース毎のconfig設定をすることを推奨しない。eslintやprettierを推奨する。
+ * https://github.com/biomejs/biome-vscode/issues/201
+ */
+{
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space"
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single",
+      "trailingCommas": "es5"
+    },
+    "parser": {
+      "unsafeParameterDecoratorsEnabled": true
+    }
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "correctness": {
+        "noUnusedImports": {
+          "level": "error"
+        },
+        "noUnusedVariables": {
+          "level": "error"
+        }
+      },
+      "suspicious": {
+        "noExplicitAny": "warn"
+      },
+      "complexity": {
+        "noUselessConstructor": "off"
+      },
+      "style": {
+        "noUselessElse": "off",
+        "noUnusedTemplateLiteral": "off",
+        "noNonNullAssertion": "off"
+      }
+    }
+  },
+  "files": {
+    "ignore": [
+      "node_modules",
+      // iac
+      "dist",
+      "cdk.out",
+      // server
+      "src/graphql.ts" // 自動生成ファイルのため
+    ]
+  }
+}

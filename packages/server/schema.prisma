@@ -1,0 +1,16 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Tasks {
+  userId String @map("user_id")
+  taskId String @map("task_id")
+
+  @@id([userId, taskId])
+  @@map("tasks")
+}
